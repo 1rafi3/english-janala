@@ -65,10 +65,10 @@ const displayLevelWord = (words) => {
         const card = document.createElement('div');
 
         card.innerHTML = `<div class="bg-white text-center rounded-xl p-5 shadow-sm">
-                <h2 class="text-xl font-bold">${word.word}</h2>
-                <p class="text-sm text-[#777777]">${word.pronunciation
+                <h2 class="text-xl font-bold">${word.word? word.word : "শব্দ পাওয়া যায় নি"}</h2>
+                <p class="text-sm text-[#777777]">${word.pronunciation? word.pronunciation : "পাওয়া যায় নি"
             }</p>
-                <div class="my-4">${word.meaning
+                <div class="my-4">${word.meaning? word.meaning : "পাওয়া যায় নি"
             }</div>
                 <div class="flex justify-between">
                     <div class="bg-[#1A91FF]/10 rounded p-2"><i class="fa-solid fa-circle-info"></i></div>
