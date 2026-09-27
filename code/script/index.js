@@ -19,7 +19,7 @@ const displayLessons = (lessons) => {
 
         const btnDiv = document.createElement('div');
 
-        btnDiv.innerHTML = `<button onClick="loadLevelWord(${lesson.level_no})" class="btn btn-primary btn-soft"><i class="fa-solid fa-book-open"></i> ${lesson.lessonName
+        btnDiv.innerHTML = `<button id="lesson-btn-${lesson.level_no}" onClick="loadLevelWord(${lesson.level_no})" class="btn btn-primary btn-soft lesson-btn"><i class="fa-solid fa-book-open"></i> ${lesson.lessonName
             } -${lesson.level_no}</button>`;
 
         levelContainer.appendChild(btnDiv);
@@ -32,7 +32,18 @@ const loadLevelWord = (id) => {
 
     fetch(url)
         .then(res => res.json())
-        .then(data => displayLevelWord(data.data))
+        .then(data => {
+            displayLevelWord(data.data);
+            activeSelector(id);
+        })
+}
+
+const activeSelector = (id) => {
+    const lessonButtons = document.getElementsByClassName('lesson-btn');
+    for (const btn of lessonButtons) {
+        btn.classList.add('btn-soft');
+    }
+    document.getElementById(`lesson-btn-${id}`).classList.remove('btn-soft');
 }
 
 const displayLevelWord = (words) => {
@@ -65,10 +76,10 @@ const displayLevelWord = (words) => {
         const card = document.createElement('div');
 
         card.innerHTML = `<div class="bg-white text-center rounded-xl p-5 shadow-sm">
-                <h2 class="text-xl font-bold">${word.word? word.word : "শব্দ পাওয়া যায় নি"}</h2>
-                <p class="text-sm text-[#777777]">${word.pronunciation? word.pronunciation : "পাওয়া যায় নি"
+                <h2 class="text-xl font-bold">${word.word ? word.word : "শব্দ পাওয়া যায় নি"}</h2>
+                <p class="text-sm text-[#777777]">${word.pronunciation ? word.pronunciation : "পাওয়া যায় নি"
             }</p>
-                <div class="my-4">${word.meaning? word.meaning : "পাওয়া যায় নি"
+                <div class="my-4">${word.meaning ? word.meaning : "পাওয়া যায় নি"
             }</div>
                 <div class="flex justify-between">
                     <div class="bg-[#1A91FF]/10 rounded p-2"><i class="fa-solid fa-circle-info"></i></div>
