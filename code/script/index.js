@@ -126,8 +126,7 @@ const displayWordDetails = (word) => {
                             <div>
                                 <h2 class="font-bold">সমার্থক শব্দ গুলো</h2>
                                 <div class="flex gap-4">
-                                    <button class="btn bg-">button-1</button><button
-                                        class="btn">button-2</button><button class="btn">button-3</button>
+                                    ${createElements(word.synonyms)}
                                 </div>
                             </div>
 
@@ -140,6 +139,15 @@ const displayWordDetails = (word) => {
 
 }
 
+const createElements = (arr) => {
+    console.log(arr);
+    if (arr.length == 0) {
+        return `<p> No synonyms available </p>`
+    } else {
+        const htmlElemets = arr.map(el => `<button class="btn bg-">${el}</button>`);
+        return htmlElemets.join(" ");
+    }
+}
 
 
 loadLessons();
