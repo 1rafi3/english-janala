@@ -50,7 +50,6 @@ const displayLevelWord = (words) => {
     // console.log(words);
 
     const wordContainer = document.getElementById('word-container');
-
     wordContainer.innerHTML = '';
 
 
@@ -71,9 +70,10 @@ const displayLevelWord = (words) => {
     }
 
     words.forEach(word => {
-        console.log(word);
+        // console.log(word);
 
         const card = document.createElement('div');
+        const modal = document.createElement('div');
 
         card.innerHTML = `<div class="bg-white text-center rounded-xl p-5 shadow-sm">
                 <h2 class="text-xl font-bold">${word.word ? word.word : "শব্দ পাওয়া যায় নি"}</h2>
@@ -82,15 +82,62 @@ const displayLevelWord = (words) => {
                 <div class="my-4">${word.meaning ? word.meaning : "পাওয়া যায় নি"
             }</div>
                 <div class="flex justify-between">
-                    <div class="bg-[#1A91FF]/10 rounded p-2"><i class="fa-solid fa-circle-info"></i></div>
+                    <div onclick="loadWordDetail(${word.id})" class="bg-[#1A91FF]/10 rounded p-2"><i class="fa-solid fa-circle-info"></i></div>
                     <div class="bg-[#1A91FF]/10 rounded p-2"><i class="fa-solid fa-volume-high"></i></div>
                 </div>
 
             </div>`
 
+
         wordContainer.appendChild(card);
 
+
     })
+
+}
+
+
+const loadWordDetail = async (id) => {
+    // console.log(id);
+    const url = `https://openapi.programming-hero.com/api/word/${id}`;
+    // console.log(url);
+    const res = await fetch(url);
+    const data = await res.json();
+    displayWordDetails(data.data);
+}
+
+const displayWordDetails = (word) => {
+    // console.log(word);
+    const detailsContainer = document.getElementById('details-container');
+
+    detailsContainer.innerHTML = `
+        <div class="p-4 bg-white rounded-xl">
+                        <div class="border rounded-xl text-left p-6 border-[#d5d3d3] shadow-sm">
+                            <h2 class="text-2xl font-bold">${word.word} (<i class="fa-solid fa-microphone-lines"></i>:${word.pronunciation})
+                            </h2>
+                            <div class="my-5 space-y-1">
+                                <h2 class="font-bold">Meaning</h2>
+                                <p>${word.meaning}</p>
+                            </div>
+                            <div class="space-y-1 mb-5">
+                                <h2>Example</h2>
+                                <p>${word.sentence}</p>
+                            </div>
+                            <div>
+                                <h2 class="font-bold">সমার্থক শব্দ গুলো</h2>
+                                <div class="flex gap-4">
+                                    <button class="btn bg-">button-1</button><button
+                                        class="btn">button-2</button><button class="btn">button-3</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <button class="btn btn-primary my-3 rounded-xl">Complete Learning</button>
+                    </div>
+    `
+
+    my_modal_2.showModal();
+
 }
 
 
